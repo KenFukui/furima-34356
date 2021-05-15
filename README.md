@@ -31,9 +31,11 @@ Things you may want to cover:
 | ---------- | ------ | ------------------------- |
 | nickname   | string | null: false               |
 | email      | string | null: false, unique: true |
-| password   | string | null: false               |
-| full_name  | string | null: false               |
-| birthday   | string | null: false               | 
+| last_name  | string | null: false               |
+| first_name | string | null: false               |
+| last_read  | string | null: false               |
+| first_read | string | null: false               |
+| birthday   | date   | null: false               | 
 
 
 ### Association
@@ -45,17 +47,18 @@ Things you may want to cover:
 
 ## itemsテーブル
 
-| Column     | Type       | Options           |
-| ---------- | ---------- | ----------------- |
-| name       | string     | null: false       |
-| description| text       | null: false       |
-| category   | text       | null: false       |
-| condition  | text       | null: false       |
-| fee        | string     | null: false       |
-| area       | string     | null: false       |
-| days       | string     | null: false       |
-| price      | string     | null: false       |
-| user       | references | foreign_key: true |
+| Column        | Type       | Options           |
+| ------------- | ---------- | ----------------- |
+| name          | string     | null: false       |
+| description   | text       | null: false       |
+| category_id   | integer    | null: false       |
+| condition_id  | integer    | null: false       |
+| fee_id        | integer    | null: false       |
+| prefecture_id | integer    | null: false       |
+| days_id       | integer    | null: false       |
+| price         | integer    | null: false       |
+| user          | references | foreign_key: true |
+
 
 ### Association
 
@@ -68,28 +71,30 @@ Things you may want to cover:
 
 | Column  | Type       | Options           |
 | ------- | ---------- | ----------------- |
-| address | references | foreign_key: true |
 | user    | references | foreign_key: true |
 | item    | references | foreign_key: true |
 
 ### Association
 
 - belongs_to :item
-- belongs_to :address
+- has_one :address
+- belongs_to :user
 
 # テーブル設計
 
-## addressテーブル
+## addressesテーブル
 
-| Column     | Type   | Options     |
-| ---------- | ------ | ----------  |
-| postal-code| string | null: false |
-| prefecture | string | null: false |
-| city       | string | null: false |
-| address    | string | null: false |
-| number     | string | null: false |
+| Column        | Type       | Options           |
+| ------------- | ---------- | ----------------- |
+| postal-code   | string     | null: false       |
+| city          | string     | null: false       |
+| prefecture_id | integer    | null: false       |
+| building      | string     | null: false       |
+| address       | string     | null: false       |
+| number        | string     | null: false       |
+| buy_item      | references | foreign_key: true |
 
 
 ### Association
 
-- has_many :buy_items
+- belongs_to :buy_item
