@@ -36,7 +36,7 @@ Things you may want to cover:
 | last_read          | string | null: false               |
 | first_read         | string | null: false               |
 | encrypted_password | string | null: false               |
-| birthday           | date   |                           | 
+| birthday           | date   | null: false               | 
 
 
 ### Association
@@ -90,7 +90,7 @@ Things you may want to cover:
 | postal-code   | string     | null: false       |
 | city          | string     | null: false       |
 | prefecture_id | integer    | null: false       |
-| building      | string     | null: false       |
+| building      | string     |                   |
 | address       | string     | null: false       |
 | number        | string     | null: false       |
 | buy_item      | references | foreign_key: true |
