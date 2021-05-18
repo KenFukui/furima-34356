@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-         VALID_PASSWORD_REGEX = /\A[a-z0-9]+\z/i
-         validates :password, format: { with: VALID_PASSWORD_REGEX }
+         VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])\w{6,225}\z/
+         validates :password, format: { with: VALID_PASSWORD_REGEX, message: "is invalid. Include both letters and numbers" }
 
          validates :last_name, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: "is invalid. Input full-width characters" }
          validates :first_name, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: "is invalid. Input full-width characters" }
