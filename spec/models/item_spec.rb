@@ -12,11 +12,11 @@ RSpec.describe Item, type: :model do
   end
 
   context '出品ができない時' do
-    # it '商品画像が存在しないとき' do
-    #   @item. = ''
-    #   @user.valid?
-    #   expect(@user.errors.full_messages).to include()
-    # end
+    it '商品画像が存在しないとき' do
+      @item.image = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Image can't be blank")
+    end
 
     it '商品名が存在しないとき' do
       @item.name = ''
@@ -60,6 +60,36 @@ RSpec.describe Item, type: :model do
       expect(@item.errors.full_messages).to include("Days can't be blank")
     end
 
+    it 'カテゴリー が存在しないとき' do
+      @item.category_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Category can't be blank")
+    end
+
+    it '商品の状態が存在しないとき' do
+      @item.condition_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Condition can't be blank")
+    end
+
+    it '配送料の負担が存在しないとき' do
+      @item.fee_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Fee can't be blank")
+    end
+
+    it '発送元の地域が存在しないとき' do
+      @item.prefecture_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+    end
+
+    it '発送までの日数が存在しないとき' do
+      @item.days_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Days can't be blank")
+    end
+
     it '販売価格が存在しないとき' do
       @item.price = ''
       @item.valid?
@@ -94,6 +124,12 @@ RSpec.describe Item, type: :model do
       @item.price = '１'
       @item.valid?
       expect(@item.errors.full_messages).to include('Price is out of setting range')
+    end
+
+    it '紐づくユーザーが存在しないと保存できないこと' do
+      @item.user = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include('User must exist')
     end
   end
 end
