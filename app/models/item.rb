@@ -3,6 +3,10 @@ class Item < ApplicationRecord
   belongs_to :user
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :fee
+  belongs_to :category
+  belongs_to :prefecture
+  belongs_to :condition
+  belongs_to :days
 
   with_options presence: true do
     validates :image
