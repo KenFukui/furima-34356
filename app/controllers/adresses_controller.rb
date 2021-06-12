@@ -1,2 +1,2 @@
-class AdressesController < ApplicationController
+class AddressesController < ApplicationController
 end

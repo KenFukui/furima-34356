@@ -1,2 +1,2 @@
-module AdressesHelper
+module AddressesHelper
 end
