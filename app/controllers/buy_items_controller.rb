@@ -1,6 +1,9 @@
 class BuyItemsController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :contributor_confirmation, only: [:index, :create]
+  before_action :buy_item_nil, only: [:index, :create]
+
   def index
-    @item = Item.find(params[:item_id])
     @item_address = ItemAddress.new
   end
 
@@ -8,6 +11,7 @@ class BuyItemsController < ApplicationController
     @item_address = ItemAddress.new(buy_item_params)
     if @item_address.valid?
       @item_address.save
+      pay_item
       redirect_to root_path
     else
       render :index      
@@ -21,12 +25,23 @@ class BuyItemsController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_cd39b7ad53146044fad668c5"  
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
-        amount: order_params[:price],  # 商品の値段
-        card: order_params[:token],    # カードトークン
+        amount: Item.find(params[:item_id]).price,  # 商品の値段
+        card: params[:token],    # カードトークン
         currency: 'jpy'                 # 通貨の種類（日本円）
       )
+  end
+
+  def contributor_confirmation
+    @item = Item.find(params[:item_id])
+    redirect_to  root_path if current_user == @item.user
+  end
+
+  def buy_item_nil
+    @item = Item.find(params[:item_id])
+    @buy_item = BuyItem.find_by(item_id: @item.id)
+    redirect_to  root_path if @buy_item != nil
   end
 
 end
