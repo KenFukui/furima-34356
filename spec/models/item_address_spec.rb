@@ -15,7 +15,7 @@ RSpec.describe ItemAddress, type: :model do
       end
 
       it 'buildingは存在しなくても購入できること' do
-        @item_address.building = ""
+        @item_address.building = ''
         expect(@item_address).to be_valid
       end
     end
@@ -54,9 +54,8 @@ RSpec.describe ItemAddress, type: :model do
       it 'addressがハイフンがなく(123-4567)の形ではない時' do
         @item_address.postal_code = '1234567'
         @item_address.valid?
-        expect(@item_address.errors.full_messages).to include("Postal code  is invalid. Enter it as follows (e.g. 123-4567)")
+        expect(@item_address.errors.full_messages).to include('Postal code  is invalid. Enter it as follows (e.g. 123-4567)')
       end
-      
 
       it 'numberが存在しない時' do
         @item_address.number = nil
@@ -67,13 +66,13 @@ RSpec.describe ItemAddress, type: :model do
       it 'numberが11桁以内の数値ではない時' do
         @item_address.number = '090123456789'
         @item_address.valid?
-        expect(@item_address.errors.full_messages).to include("Number is too short and is invalid. Input only number")
+        expect(@item_address.errors.full_messages).to include('Number is too short and is invalid. Input only number')
       end
 
       it 'numberが11桁以内の数値ではない時' do
         @item_address.number = 'abc'
         @item_address.valid?
-        expect(@item_address.errors.full_messages).to include("Number is too short and is invalid. Input only number")
+        expect(@item_address.errors.full_messages).to include('Number is too short and is invalid. Input only number')
       end
 
       it 'userが紐付いていないとき' do

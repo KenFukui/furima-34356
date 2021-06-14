@@ -4,7 +4,7 @@ class ItemAddress
 
   with_options presence: true do
     validates :token
-    validates :postal_code, format: { with: /\A\d{3}[-]\d{4}\z/, message: ' is invalid. Enter it as follows (e.g. 123-4567)' }
+    validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: ' is invalid. Enter it as follows (e.g. 123-4567)' }
     validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :city
     validates :address
@@ -15,6 +15,7 @@ class ItemAddress
 
   def save
     buy_item = BuyItem.create(user_id: user_id, item_id: item_id)
-    Address.create(postal_code: postal_code, city: city, prefecture_id: prefecture_id, building: building, address: address, number: number, buy_item: buy_item)
+    Address.create(postal_code: postal_code, city: city, prefecture_id: prefecture_id, building: building, address: address,
+                   number: number, buy_item: buy_item)
   end
 end
