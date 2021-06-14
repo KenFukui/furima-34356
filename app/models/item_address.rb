@@ -9,6 +9,8 @@ class ItemAddress
     validates :city
     validates :address
     validates :number, format: { with: /\A\d{11}\z/, message: 'is too short and is invalid. Input only number' }
+    validates :user_id
+    validates :item_id
   end
 
   def save
