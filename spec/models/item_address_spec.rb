@@ -45,6 +45,12 @@ RSpec.describe ItemAddress, type: :model do
         expect(@item_address.errors.full_messages).to include("Prefecture can't be blank")
       end
 
+      it 'prefecture_idが1の時' do
+        @item_address.prefecture_id = 1
+        @item_address.valid?
+        expect(@item_address.errors.full_messages).to include("Prefecture can't be blank")
+      end
+
       it 'addressが存在しない時' do
         @item_address.address = nil
         @item_address.valid?
@@ -69,8 +75,20 @@ RSpec.describe ItemAddress, type: :model do
         expect(@item_address.errors.full_messages).to include('Number is too short and is invalid. Input only number')
       end
 
-      it 'numberが11桁以内の数値ではない時' do
+      it 'numberが数値ではない時' do
         @item_address.number = 'abc'
+        @item_address.valid?
+        expect(@item_address.errors.full_messages).to include('Number is too short and is invalid. Input only number')
+      end
+
+      it 'numberが英数字混合の時' do
+        @item_address.number = 'abc12341234'
+        @item_address.valid?
+        expect(@item_address.errors.full_messages).to include('Number is too short and is invalid. Input only number')
+      end
+
+      it 'numberが9桁以内の時' do
+        @item_address.number = '090123456'
         @item_address.valid?
         expect(@item_address.errors.full_messages).to include('Number is too short and is invalid. Input only number')
       end

@@ -41,7 +41,6 @@ class BuyItemsController < ApplicationController
   end
 
   def buy_item_nil
-    @item = Item.find(params[:item_id])
     @buy_item = BuyItem.find_by(item_id: @item.id)
     redirect_to root_path unless @buy_item.nil?
   end

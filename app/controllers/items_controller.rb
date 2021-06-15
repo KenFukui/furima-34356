@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :contributor_confirmation, only: [:edit, :update, :destroy]
-  before_action :buy_item_nil, only: [:edit]
+  before_action :buy_item_nil, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -57,7 +57,6 @@ class ItemsController < ApplicationController
   end
 
   def buy_item_nil
-    @item = Item.find(params[:id])
     @buy_item = BuyItem.find_by(item_id: @item.id)
     redirect_to root_path unless @buy_item.nil?
   end

@@ -1,6 +1,6 @@
 class ItemAddress
   include ActiveModel::Model
-  attr_accessor :postal_code, :prefecture_id, :city, :address, :building, :number, :user_id, :item_id, :buy_item, :token
+  attr_accessor :postal_code, :prefecture_id, :city, :address, :building, :number, :user_id, :item_id, :token
 
   with_options presence: true do
     validates :token
@@ -8,7 +8,7 @@ class ItemAddress
     validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :city
     validates :address
-    validates :number, format: { with: /\A\d{11}\z/, message: 'is too short and is invalid. Input only number' }
+    validates :number, format: { with: /\A\d{10,11}\z/, message: 'is too short and is invalid. Input only number' }
     validates :user_id
     validates :item_id
   end
@@ -16,6 +16,6 @@ class ItemAddress
   def save
     buy_item = BuyItem.create(user_id: user_id, item_id: item_id)
     Address.create(postal_code: postal_code, city: city, prefecture_id: prefecture_id, building: building, address: address,
-                   number: number, buy_item: buy_item)
+                   number: number, buy_item_id: buy_item.id)
   end
 end
